@@ -188,7 +188,7 @@ void Imprimir_alertas(Alerta_t *arr, int tamaño){
     printf("\n==================================================================================================================================================================\n");
     printf("|                                                      REPORTE DE GESTION (ORDENADO POR PRIORIDAD: MAYOR A MENOR)                                                |\n");
     printf("==================================================================================================================================================================\n");
-    printf("|      #       |        Desastre      |     Ubicacio    |             Magnitud (Unidad)          |          Afectados      |       Puntaje       | Orden Llegada |\n");
+    printf("|      #       |        Desastre      |     Ubicacion   |             Magnitud (Unidad)          |          Afectados      |       Puntaje       | Orden Llegada |\n");
     printf("|--------------|----------------------|-----------------|----------------------------------------|-------------------------|---------------------|---------------|\n");
 
     for(int i = tamaño - 1; i >= 0; i--){ 
