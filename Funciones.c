@@ -62,7 +62,9 @@ void Menu(){
     printf("2. Procesar alerta de maxima prioridad\n");
     printf("3. Generar reporte ordenado por prioridad\n");
     printf("4. Saber que desastres naturales hay\n");
-    printf("5. Salir del sistema\n");
+    printf("5. Ingresar archivo (alertas.txt) de alerta de desastre\n");
+    printf("6. Crear archivo (alertas.txt) con alertas aleatorias\n");
+    printf("7. Salir del sistema\n");
     printf("Ingrese su opcion: ");
 }
 
@@ -183,20 +185,20 @@ void Imprimir_alertas(Alerta_t *arr, int tamaño){
     char magnitud_con_unidad[25]; 
     const char *unidad;
 
-    printf("\n======================================================================================================================================\n");
-    printf("|                                        REPORTE DE GESTION (ORDENADO POR PRIORIDAD: MAYOR A MENOR)                                  |\n");
-    printf("======================================================================================================================================\n");
-    printf("|  #  |        Desastre      | Ubicacion       |         Magnitud (Unidad)      |     Afectados     |       Puntaje       | Orden L. |\n");
-    printf("|-----|----------------------|-----------------|--------------------------------|-------------------|---------------------|----------|\n");
+    printf("\n==================================================================================================================================================================\n");
+    printf("|                                                      REPORTE DE GESTION (ORDENADO POR PRIORIDAD: MAYOR A MENOR)                                                |\n");
+    printf("==================================================================================================================================================================\n");
+    printf("|      #       |        Desastre      |     Ubicacio    |             Magnitud (Unidad)          |          Afectados      |       Puntaje       | Orden Llegada |\n");
+    printf("|--------------|----------------------|-----------------|----------------------------------------|-------------------------|---------------------|---------------|\n");
 
     for(int i = tamaño - 1; i >= 0; i--){ 
         unidad = Obtener_unidad(arr[i].desastre);
         sprintf(magnitud_con_unidad, "%.1f %s", arr[i].magnitud, unidad);
 
-        printf("| %-3d | %-20s | %-15s | %-30s | %-17d | %-19d | %-8d |\n", 
+        printf("| %-12d | %-20s | %-15s | %-38s | %-23d | %-19d | %-13d |\n", 
         (tamaño - i), arr[i].desastre, arr[i].ubicacion, magnitud_con_unidad, arr[i].afectados, arr[i].prioridad, arr[i].orden_llegada);
     }
-    printf("======================================================================================================================================\n");
+    printf("==================================================================================================================================================================\n");
 }
 
 void Generar_reporte(MaxHeap_t *m){
@@ -235,4 +237,135 @@ void Mostrar_desastres(){
     
     printf("|----------------------|--------------------------------|----------------------------------------------------------------------------------------------------\n");
     printf("NOTA: La Prioridad Total = Puntos Base * Poblacion Afectada.\n");
+}
+
+float random_float(float min, float max){ // generador de numeros aleatorios
+    return min + ((float)rand() / (float)RAND_MAX) * (max - min);
+}
+
+int random_int(int min, int max){
+    if (min == max) return min;
+    return rand() % (max - min + 1) + min;
+}
+
+void Insertar_alertas_archivo(MaxHeap_t *m, const char *nombre_archivo){
+    FILE *archivo = fopen(nombre_archivo, "r");
+    if(archivo == NULL) return;
+
+    char linea[512];
+    int alertas_insertadas = 0;
+    int linea_actual = 0;
+
+    printf("\n--- Insertando Alertas desde '%s' ---\n", nombre_archivo);
+
+    while(fgets(linea, sizeof(linea), archivo) != NULL){
+        linea_actual++;
+        linea[strcspn(linea, "\n")] = 0; //elimina salto de linea
+
+        if(linea[0] == '\0') continue;  //ver si la linea esta vacia
+
+        Alerta_t nueva; //los datos esperados son: ubicacion;desastre;magnitud;afectados
+        char *token;
+        char *resto_linea = linea;
+
+        token = strsep(&resto_linea, ";"); //ubicacion
+        if(token == NULL || strlen(token) >= 255){
+            printf("Error en linea %d. Saltando.\n", linea_actual);
+            continue;
+        }
+        strcpy(nueva.ubicacion, token);
+
+        token = strsep(&resto_linea, ";"); //desastre
+        if(token == NULL){
+            printf("Error en linea %d. Saltando.\n", linea_actual);
+            continue;
+        }
+        if(!Verificar_desastre(token)){//verificar el desastre
+            printf("Error en Linea %d: El desastre '%s' no es un tipo valido. Saltando.\n", linea_actual, token);
+            continue;
+        }
+        strcpy(nueva.desastre, token);
+
+        token = strsep(&resto_linea, ";"); //magnitud
+        if(token == NULL || sscanf(token, "%f", &nueva.magnitud) != 1){
+            printf("Error en linea %d. Saltando.\n", linea_actual);
+            continue;
+        }
+
+        token = strsep(&resto_linea, ";"); //afectados
+        if(token == NULL || sscanf(token, "%d", &nueva.afectados) != 1){
+            printf("Error en linea %d. Saltando.\n", linea_actual);
+            continue;
+        }
+
+        Insertar(m, nueva);
+        alertas_insertadas++;
+    }
+    fclose(archivo);
+    printf("Proceso finalizado. Se insertaron %d alertas con exito.\n", alertas_insertadas);
+}
+
+void Generar_alertas_archivo(int num_ejemplos, const char *nombre_archivo){
+    
+    int num_desastres = sizeof(desastres) / sizeof(desastres[0]);
+    
+    const char *ubicaciones[] = {
+        "Ciudad A", "Pueblo B", "Region C", "Zona D", "Norte E", 
+        "Sur F", "Este G", "Oeste H", "Capital I", "Costera J"
+    };
+    int num_ubicaciones = sizeof(ubicaciones) / sizeof(ubicaciones[0]);
+
+    FILE *archivo = fopen(nombre_archivo, "w");
+    if (archivo == NULL) return;
+    
+    srand(time(NULL));
+
+    printf("\n--- Generando %d Alertas en '%s' ---\n", num_ejemplos, nombre_archivo);
+    printf("Archivo de alertas masivas generado.\n");
+    printf("Formato: Ubicacion;Desastre;Magnitud;Afectados\n");
+
+    for (int i = 0; i < num_ejemplos; i++){
+        char ubicacion[255];
+        char desastre[255];
+        float magnitud;
+        int afectados;
+
+        sprintf(ubicacion, "%s-%d", ubicaciones[random_int(0, num_ubicaciones - 1)], random_int(1, 999));
+
+        strcpy(desastre, desastres[random_int(0, num_desastres - 1)]);
+
+        if(strcmp(desastre, "Terremoto") == 0){
+            magnitud = random_float(1.0, 10.0);
+        }else if(strcmp(desastre, "Tsunami") == 0){
+            magnitud = random_float(1.0, 15.0);
+        }else if(strcmp(desastre, "Huracan") == 0 || strcmp(desastre, "Ciclon") == 0){
+            magnitud = random_float(100.0, 300.0);
+        }else if(strcmp(desastre, "Erupcion Volcanica") == 0){
+            magnitud = random_int(1, 7);
+        }else if(strcmp(desastre, "Sequia") == 0){
+            magnitud = random_float(-3.0, 0.0);
+        }else if(strcmp(desastre, "Incendio") == 0){
+            magnitud = random_int(1, 10000);
+        }else if(strcmp(desastre, "Tornado") == 0){
+            magnitud = random_float(100.0, 400.0);
+        }else if(strcmp(desastre, "Inundacion") == 0){
+            magnitud = random_float(0.1, 5.0);
+        }else if(strcmp(desastre, "Avalancha") == 0){
+            magnitud = random_int(10, 10000);
+        } else if(strcmp(desastre, "Vendaval") == 0){
+            magnitud = random_float(50.0, 150.0);
+        }
+
+        if(random_int(1, 10) <= 9){ //numero de afectados 
+            afectados = random_int(100, 50000);
+        }else{ 
+            afectados = random_int(50001, 5000000);
+        }
+        
+        
+        fprintf(archivo, "%s;%s;%.1f;%d\n", ubicacion, desastre, magnitud, afectados); //escribir al archivo en el formato correcto: Ubicacion;Desastre;Magnitud;Afectados
+    }
+
+    fclose(archivo);
+    printf("Proceso finalizado. Se generaron %d alertas en '%s' con éxito.\n", num_ejemplos, nombre_archivo);
 }

@@ -1,6 +1,6 @@
 TARGET = out
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c11
+CFLAGS = -Wall -Wextra -std=c11 -D_DEFAULT_SOURCE
 SOURCES = main.c Funciones.c Estructuras.c
 OBJECTS = $(SOURCES:.c=.o)
 

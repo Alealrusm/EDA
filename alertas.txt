@@ -1,0 +1,50 @@
+Pueblo B-938;Vendaval;145.5;971449
+Norte E-644;Inundacion;0.9;861745
+Este G-546;Tsunami;7.8;7367
+Oeste H-746;Erupcion Volcanica;1.0;435834
+Pueblo B-630;Terremoto;9.5;22570
+Norte E-888;Huracan;246.3;15208
+Capital I-671;Ciclon;149.4;48575
+Este G-231;Ciclon;103.8;9501
+Pueblo B-293;Sequia;-0.3;12969
+Oeste H-824;Inundacion;5.0;1462503
+Pueblo B-578;Ciclon;105.0;3481330
+Sur F-126;Terremoto;8.5;31967
+Oeste H-524;Avalancha;5437.0;34760
+Oeste H-578;Vendaval;97.5;31848
+Costera J-119;Vendaval;61.9;39876
+Oeste H-720;Ciclon;152.8;36208
+Norte E-393;Tsunami;10.9;36003
+Zona D-672;Vendaval;77.6;31342
+Costera J-511;Sequia;-2.9;30697
+Norte E-120;Sequia;-2.9;6596
+Region C-489;Inundacion;2.6;22162
+Norte E-175;Incendio;2455.0;20626
+Oeste H-407;Huracan;190.8;15385
+Costera J-983;Huracan;224.4;31548
+Pueblo B-333;Erupcion Volcanica;5.0;40611
+Sur F-305;Tornado;231.3;35946
+Este G-538;Sequia;-0.7;49481
+Norte E-5;Huracan;114.2;3897
+Region C-283;Tsunami;3.7;689758
+Oeste H-203;Vendaval;122.1;13737
+Zona D-877;Terremoto;5.1;44509
+Pueblo B-521;Ciclon;136.3;2437
+Capital I-452;Huracan;265.3;26091
+Sur F-346;Tsunami;14.4;38579
+Costera J-110;Inundacion;1.4;39045
+Zona D-984;Incendio;5568.0;41640
+Region C-750;Inundacion;4.2;36668
+Norte E-541;Terremoto;4.2;31592
+Este G-689;Avalancha;9442.0;42421
+Norte E-79;Incendio;6219.0;1575650
+Zona D-242;Tsunami;1.0;27013
+Ciudad A-408;Avalancha;8228.0;13231
+Zona D-724;Tornado;107.4;2379
+Costera J-406;Vendaval;144.0;48055
+Norte E-609;Huracan;172.6;30258
+Zona D-386;Erupcion Volcanica;6.0;23361
+Norte E-152;Huracan;237.4;43214
+Costera J-618;Sequia;-0.7;14378
+Region C-520;Erupcion Volcanica;5.0;46577
+Sur F-937;Huracan;232.8;13125

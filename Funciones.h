@@ -17,3 +17,5 @@ void Generar_reporte(MaxHeap_t *m);
 
 void Mostrar_desastres();
 
+void Insertar_alertas_archivo(MaxHeap_t *m, const char *nombre_archivo);
+void Generar_alertas_archivo(int num_ejemplos, const char *nombre_archivo);

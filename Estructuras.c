@@ -134,9 +134,16 @@ void Heapify_down(MaxHeap_t *m, int indice){ //restaura la priopiedad del monton
 }
 
 void Insertar(MaxHeap_t *m, Alerta_t nueva_alerta){ //inserta la alerta en el Heap
-    if(m->tamaño == m->capacidad){
-        printf("\nHeap lleno\n");
-        return;
+    if(m->tamaño == m->capacidad){ //si el heap esta lleno lo redimensionamos
+        int nueva_capacidad = m->capacidad * 2;
+        Alerta_t *temp = (Alerta_t *)realloc(m->alerta, sizeof(Alerta_t) * nueva_capacidad);
+        if(temp == NULL){
+            printf("\nError: No se pudo redimensionar el Heap.\n");
+            return;
+        }
+        m->alerta = temp;
+        m->capacidad = nueva_capacidad;
+        printf("\nHeap redimensionado a capacidad %d.\n", m->capacidad);
     }
     nueva_alerta.orden_llegada = m->contador++; //asignar orden de llegada
     nueva_alerta.prioridad = Calcular_prioridad(nueva_alerta.desastre, nueva_alerta.magnitud, nueva_alerta.afectados); 

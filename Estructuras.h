@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 typedef struct Alerta{ //estructura que represesenta una alerta de desastre con la prioridad
     char ubicacion[255];
@@ -21,11 +22,6 @@ typedef struct MaxHeap{ //para la cola de prioridad
     int tamaño;
     int contador; //contador para el orden_llegada
 }MaxHeap_t;
-
-typedef struct Desastre{ //el catalogo de desastre y sus factores base 
-    char nombre[255];
-    int factor; //factor para calcular la prioridad
-}Desastre_t;
 
 MaxHeap_t *Crear_heap();
 void Liberar_heap(MaxHeap_t *m);
