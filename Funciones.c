@@ -56,7 +56,7 @@ const char *desastres[] = {
 
 void Menu(){
     printf("\n==============================================\n");
-    printf("     SISTEMA DE TRIAGE DE DESASTRES NATURALES\n");
+    printf("   SISTEMA DE TRIAGE DE DESASTRES NATURALES   \n");
     printf("==============================================\n");
     printf("1. Ingresar nueva alerta de desastre\n");
     printf("2. Procesar alerta de maxima prioridad\n");
@@ -220,7 +220,7 @@ void Mostrar_desastres(){
     
     int num_desastres = sizeof(desastres) / sizeof(desastres[0]);
     
-    printf("\n===========================================================================================================================================================\n");
+    printf("\n=============================================================================================================================================================\n");
     printf("|                                CASOS DE DESASTRES NATURALES VALIDOS, NIVEL DE RIESGO Y VALORES DE PUNTUACIÓN BASE                                         |\n");
     printf("=============================================================================================================================================================\n");
     printf("|        Desastre      |         Magnitud (Unidad)      |                            Rangos de Magnitud -> Puntos Base (VALORES)                            |\n");
