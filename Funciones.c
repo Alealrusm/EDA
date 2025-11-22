@@ -13,19 +13,6 @@ const char *Obtener_unidad(const char *tipo_desastre){
     if (strcmp(tipo_desastre, "Vendaval") == 0) return "km/h (Viento)";
     return "N/A";
 }
-const char *Obtener_nivel(const char *tipo_desastre){
-    if(strcmp(tipo_desastre, "Tsunami") == 0) return "Nivel I (Critico)";
-    if(strcmp(tipo_desastre, "Erupcion Volcanica") == 0) return "Nivel I (Critico)";
-    if(strcmp(tipo_desastre, "Terremoto") == 0) return "Nivel I (Critico)"; 
-    if(strcmp(tipo_desastre, "Huracan") == 0 || strcmp(tipo_desastre, "Ciclon") == 0) return "Nivel II (Alto)";
-    if(strcmp(tipo_desastre, "Tornado") == 0) return "Nivel II (Alto)";
-    if(strcmp(tipo_desastre, "Inundacion") == 0) return "Nivel II (Alto)";
-    if(strcmp(tipo_desastre, "Incendio") == 0) return "Nivel III (Medio)";
-    if(strcmp(tipo_desastre, "Avalancha") == 0) return "Nivel III (Medio)";
-    if(strcmp(tipo_desastre, "Sequia") == 0) return "Nivel III (Medio)";
-    if(strcmp(tipo_desastre, "Vendaval") == 0) return "Nivel IV (Bajo)";
-    return "N/A";
-}
 const char *Obtener_rangos(const char *tipo_desastre){
     static char rangos[250]; 
     rangos[0] = '\0'; 
@@ -146,11 +133,11 @@ void Alerta_critica(MaxHeap_t *m){
     printf("\n==============================================\n");
     printf("      ALERTA DE MAXIMA PRIORIDAD EXTRAIDA   \n");
     printf("==============================================\n");
-    printf("  Tipo de desastre: %s\n", critica.desastre);
-    printf("  Magnitud (Unidad): %.2f %s\n", critica.magnitud, unidad);
-    printf("  Ubicacion:        %s\n", critica.ubicacion);
-    printf("  Puntaje de prioridad: %d (max)\n", critica.prioridad);
-    printf("  Orden de llegada:   %d\n", critica.orden_llegada);
+    printf("  Tipo de desastre:  %s\n", critica.desastre);
+    printf("  Magnitud (Unidad):  %.2f %s\n", critica.magnitud, unidad);
+    printf("  Ubicacion:  %s\n", critica.ubicacion);
+    printf("  Puntaje de prioridad:  %d (max)\n", critica.prioridad);
+    printf("  Orden de llegada:  %d\n", critica.orden_llegada);
     printf("==============================================\n");
 }
 
@@ -196,20 +183,20 @@ void Imprimir_alertas(Alerta_t *arr, int tamaño){
     char magnitud_con_unidad[25]; 
     const char *unidad;
 
-    printf("\n===================================================================================================================\n");
-    printf("|                              REPORTE DE GESTION (ORDENADO POR PRIORIDAD: MAYOR A MENOR)                         |\n");
-    printf("===================================================================================================================\n");
-    printf("|  #  | Desastre       | Ubicacion       | Magnitud (Unidad) |     Afectados     |       Puntaje       | Orden L. |\n");
-    printf("|-----|----------------|-----------------|-------------------|-------------------|---------------------|----------|\n");
+    printf("\n======================================================================================================================================\n");
+    printf("|                                        REPORTE DE GESTION (ORDENADO POR PRIORIDAD: MAYOR A MENOR)                                  |\n");
+    printf("======================================================================================================================================\n");
+    printf("|  #  |        Desastre      | Ubicacion       |         Magnitud (Unidad)      |     Afectados     |       Puntaje       | Orden L. |\n");
+    printf("|-----|----------------------|-----------------|--------------------------------|-------------------|---------------------|----------|\n");
 
     for(int i = tamaño - 1; i >= 0; i--){ 
         unidad = Obtener_unidad(arr[i].desastre);
         sprintf(magnitud_con_unidad, "%.1f %s", arr[i].magnitud, unidad);
 
-        printf("| %-3d | %-14s | %-15s | %-17s | %-17d | %-19d | %-8d |\n", 
+        printf("| %-3d | %-20s | %-15s | %-30s | %-17d | %-19d | %-8d |\n", 
         (tamaño - i), arr[i].desastre, arr[i].ubicacion, magnitud_con_unidad, arr[i].afectados, arr[i].prioridad, arr[i].orden_llegada);
     }
-    printf("===================================================================================================================\n");
+    printf("======================================================================================================================================\n");
 }
 
 void Generar_reporte(MaxHeap_t *m){
@@ -233,20 +220,19 @@ void Mostrar_desastres(){
     
     int num_desastres = sizeof(desastres) / sizeof(desastres[0]);
     
-    printf("\n==================================================================================================================================================================================\n");
-    printf("|                                              CASOS DE DESASTRES NATURALES VALIDOS, NIVEL DE RIESGO Y VALORES DE PUNTUACIÓN BASE                                                |\n");
-    printf("==================================================================================================================================================================================\n");
-    printf("|        DESASTRE      |   NIVEL DE RIESGO  |       UNIDAD DE MAGNITUD       |                            Rangos de Magnitud -> Puntos Base (VALORES)                            |\n");
-    printf("|----------------------|--------------------|--------------------------------|----------------------------------------------------------------------------------------------------\n");
+    printf("\n===========================================================================================================================================================\n");
+    printf("|                                CASOS DE DESASTRES NATURALES VALIDOS, NIVEL DE RIESGO Y VALORES DE PUNTUACIÓN BASE                                         |\n");
+    printf("=============================================================================================================================================================\n");
+    printf("|        Desastre      |         Magnitud (Unidad)      |                            Rangos de Magnitud -> Puntos Base (VALORES)                            |\n");
+    printf("|----------------------|--------------------------------|----------------------------------------------------------------------------------------------------\n");
 
     for(int i = 0; i < num_desastres; i++){
         const char *unidad = Obtener_unidad(desastres[i]);
-        const char *nivel = Obtener_nivel(desastres[i]); 
         const char *rangos_puntos = Obtener_rangos(desastres[i]);
         
-        printf("| %-20s | %-18s | %-30s | %-97s |\n", desastres[i], nivel, unidad, rangos_puntos);
+        printf("| %-20s | %-30s | %-97s |\n", desastres[i], unidad, rangos_puntos);
     }
     
-    printf("|----------------------|--------------------|--------------------------------|----------------------------------------------------------------------------------------------------\n");
+    printf("|----------------------|--------------------------------|----------------------------------------------------------------------------------------------------\n");
     printf("NOTA: La Prioridad Total = Puntos Base * Poblacion Afectada.\n");
 }

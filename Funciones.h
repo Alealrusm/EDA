@@ -1,7 +1,6 @@
 #include "Estructuras.h"
 
 const char *Obtener_unidad(const char *tipo_desastre);
-const char *Obtener_nivel(const char *tipo_desastre);
 const char *Obtener_rangos(const char *tipo_desastre);
 void Menu();
 
