@@ -30,7 +30,7 @@ const char *Obtener_rangos(const char *tipo_desastre){
         sprintf(rangos, "  1-2: 2.0 Puntos     |  3: 4.5 Puntos        |  4-5: 7.5 Puntos        |  6+: 9.8 Puntos      ");
     }
     if(strcmp(tipo_desastre, "Sequia") == 0){
-        sprintf(rangos, " <-1: 1.0 Puntos      |  -1 a -1.5: 3.5 Puntos|  -1.5 a -2: 7.0 Puntos  |  >-2: 8.5 Puntos     ");
+        sprintf(rangos, "  <-1: 1.0 Puntos     |  -1 a -1.5: 3.5 Puntos|  -1.5 a -2: 7.0 Puntos  |  >-2: 8.5 Puntos     ");
     }
     if(strcmp(tipo_desastre, "Incendio") == 0){
         sprintf(rangos, "  0-100: 2.6 Puntos   |  100-1000: 3.2 Puntos |  1000-10000: 6.8 Puntos |  10000+: 8.8 Puntos  ");
